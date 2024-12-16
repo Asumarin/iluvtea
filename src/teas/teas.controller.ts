@@ -16,12 +16,14 @@ export class TeasController {
     }
 
     @Get(':id')
-    findOne(@Param('id') id: string){
-        return this.teasService.findOne(id);
+    findOne(@Param('id') id: number){
+        console.log(typeof id)
+        return this.teasService.findOne('' + id);
     }
 
     @Post()
     create(@Body() createTeaDto: CreateTeaDto){
+        console.log(createTeaDto instanceof CreateTeaDto);
         return this.teasService.create(createTeaDto);
     } 
 
