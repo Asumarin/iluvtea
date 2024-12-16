@@ -25,7 +25,8 @@ export class TeasService{
     }
 
     create(createTeaDto: any){
-        this.teas.push(createTeaDto);
+        this.teas.push(createTeaDto)
+        return createTeaDto;
     }
 
     update(id: string, updateTeaDto: any){
