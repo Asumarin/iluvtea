@@ -1,6 +1,15 @@
+import { Column, Entity, PrimaryColumn } from 'typeorm';
+@Entity()
 export class Tea {
-    id: number;
-    name: string;
-    brand: string;
-    flavours: string[];
+  @PrimaryColumn()
+  id: number;
+
+  @Column()
+  name: string;
+
+  @Column()
+  brand: string;
+
+  @Column('json', { nullable: true })
+  flavours: string[];
 }
