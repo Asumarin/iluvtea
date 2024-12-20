@@ -1,45 +1,50 @@
-import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Tea } from './entities/tea.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { CreateTeaDto } from './dto/create-tea.dto/create-tea.dto';
+import { UpdateTeaDto } from './dto/update-tea.dto/update-tea.dto';
 
 @Injectable()
-export class TeasService{
-    private teas: Tea[] = [
-        {
-            id: 1,
-            name: 'Golden Ceylon',
-            brand: 'Grinfield',
-            flavours: ['golden', 'ceylon']
-        },
-    ];
+export class TeasService {
+  constructor(
+    @InjectRepository(Tea)
+    private readonly teaRepository: Repository<Tea>,
+  ) {}
 
-    findAll(){
-        return this.teas;
+  findAll() {
+    return this.teaRepository.find();
+  }
+
+  async findOne(id: number) {
+    //  с гайда
+    const tea = await this.teaRepository.findOneBy({ id });
+
+    if (!tea?.id) {
+      throw new NotFoundException(`Tea #${id} not found`);
     }
 
-    findOne(id: string){
-        const tea = this.teas.find(item => item.id === +id);
-        if(!tea){
-            throw new NotFoundException(`Tea #${id} not found`);
-        }
-        return tea;
-    }
+    return tea;
+  }
 
-    create(createTeaDto: any){
-        this.teas.push(createTeaDto)
-        return createTeaDto;
-    }
+  create(createTeaDto: CreateTeaDto) {
+    const tea = this.teaRepository.create(createTeaDto);
+    return this.teaRepository.save(tea);
+  }
 
-    update(id: string, updateTeaDto: any){
-        const existingTea = this.findOne(id);
-        if(existingTea){
-            //update this
-        }
+  async update(id: string, updateTeaDto: UpdateTeaDto) {
+    const tea = await this.teaRepository.preload({
+      id: +id,
+      ...updateTeaDto,
+    });
+    if (!tea) {
+      throw new NotFoundException(`Tea #${id} not found`);
     }
+    return this.teaRepository.save(tea);
+  }
 
-    remove(id: string){
-        const teaIndex = this.teas.findIndex(item => item.id === +id);
-        if(teaIndex >= 0){
-            this.teas.splice(teaIndex, 1);
-        }
-    }
+  async remove(id) {
+    const tea = await this.findOne(id);
+    return this.teaRepository.remove(tea);
+  }
 }

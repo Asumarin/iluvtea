@@ -23,9 +23,9 @@ export class TeasController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
+  findOne(@Param('id') id) {
     console.log(typeof id);
-    return this.teasService.findOne('' + id);
+    return this.teasService.findOne(id); //return this.teasService.findOne('' + id);
   }
 
   @Post()
