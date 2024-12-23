@@ -13,17 +13,19 @@ export class TeasService {
   ) {}
 
   findAll() {
-    return this.teaRepository.find();
+    return this.teaRepository.find({
+      relations: ['flavors'],
+    });
   }
 
   async findOne(id: number) {
-    //  с гайда
-    const tea = await this.teaRepository.findOneBy({ id });
-
+    const tea = await this.teaRepository.findOne({
+      where: { id },
+      relations: ['flavors'],
+    });
     if (!tea?.id) {
       throw new NotFoundException(`Tea #${id} not found`);
     }
-
     return tea;
   }
 

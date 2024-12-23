@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Tea } from '../tea.entity';
+import { Tea } from './tea.entity';
 @Entity()
 export class Flavor {
   @PrimaryGeneratedColumn()
@@ -8,6 +8,6 @@ export class Flavor {
   @Column()
   name: string;
 
-  @ManyToMany((type) => Tea, (tea) => tea.flavours)
+  @ManyToMany((type) => Tea, (tea) => tea.flavors)
   teas: Tea[];
 }
