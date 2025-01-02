@@ -14,7 +14,7 @@ import { TEA_BRANDS } from './teas.constants';
     TeasService,
     {
       provide: TEA_BRANDS,
-      useValue: ['buddy brew', 'tess'],
+      useFactory: async () => ['buddy brew', 'tess'],
     },
   ],
   exports: [TeasService],

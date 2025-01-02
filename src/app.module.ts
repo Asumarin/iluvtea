@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { TeasModule } from './teas/teas.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TeaRatingModule } from './tea-rating/tea-rating.module';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { TeaRatingModule } from './tea-rating/tea-rating.module';
       synchronize: true,
     }),
     TeaRatingModule,
+    DatabaseModule,
   ],
   controllers: [AppController],
   providers: [AppService],
