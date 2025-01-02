@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, Scope } from '@nestjs/common';
 import { TeasController } from './teas.controller';
 import { TeasService } from './teas.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -14,7 +14,8 @@ import { TEA_BRANDS } from './teas.constants';
     TeasService,
     {
       provide: TEA_BRANDS,
-      useFactory: async () => ['buddy brew', 'tess'],
+      useFactory: () => ['buddy brew', 'tess'],
+      scope: Scope.TRANSIENT,
     },
   ],
   exports: [TeasService],

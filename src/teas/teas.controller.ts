@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Inject,
   Param,
   Patch,
   Post,
@@ -12,10 +13,16 @@ import { TeasService } from './teas.service';
 import { CreateTeaDto } from './dto/create-tea.dto/create-tea.dto';
 import { UpdateTeaDto } from './dto/update-tea.dto/update-tea.dto';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto/pagination-query.dto';
+import { REQUEST } from '@nestjs/core';
 
 @Controller('teas')
 export class TeasController {
-  constructor(private readonly teasService: TeasService) {}
+  constructor(
+    private readonly teasService: TeasService,
+    @Inject(REQUEST) private readonly request: Request,
+  ) {
+    console.log('TeasController created!');
+  }
 
   @Get()
   findAll(@Query() paginationQuery: PaginationQueryDto) {
