@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
-import { HttpExceptionFilter } from './common/filters/http-exception/http-exception.filter';
+import { ApiKeyGuard } from './common/guards/api-key/api-key.guard';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -15,9 +15,8 @@ async function bootstrap() {
       },
     }),
   );
-
+  app.useGlobalGuards(new ApiKeyGuard());
   const PORT = process.env.PORT ?? 3000;
-  app.useGlobalFilters(new HttpExceptionFilter());
   await app.listen(PORT, () => {
     Logger.log(`Server is running on PORT: ${PORT}`);
   });
