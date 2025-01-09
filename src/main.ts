@@ -15,7 +15,6 @@ async function bootstrap() {
       },
     }),
   );
-  app.useGlobalGuards(new ApiKeyGuard());
   const PORT = process.env.PORT ?? 3000;
   await app.listen(PORT, () => {
     Logger.log(`Server is running on PORT: ${PORT}`);

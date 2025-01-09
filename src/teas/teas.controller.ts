@@ -14,6 +14,7 @@ import { CreateTeaDto } from './dto/create-tea.dto/create-tea.dto';
 import { UpdateTeaDto } from './dto/update-tea.dto/update-tea.dto';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto/pagination-query.dto';
 import { REQUEST } from '@nestjs/core';
+import { Public } from 'src/common/decorators/public.decorator';
 
 @Controller('teas')
 export class TeasController {
@@ -24,6 +25,7 @@ export class TeasController {
     console.log('TeasController created!');
   }
 
+  @Public()
   @Get()
   findAll(@Query() paginationQuery: PaginationQueryDto) {
     //const { limit, offset } = paginationQuery;
