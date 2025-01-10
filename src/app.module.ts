@@ -29,7 +29,7 @@ import appConfig from './config/app.config';
     TeasModule,
     TeaRatingModule,
     DatabaseModule,
-    CommonModule,
+    // CommonModule,
   ],
   controllers: [AppController],
   providers: [AppService],

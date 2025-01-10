@@ -7,7 +7,7 @@ import { UpdateTeaDto } from './dto/update-tea.dto/update-tea.dto';
 import { Flavor } from './entities/flavor.entity';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto/pagination-query.dto';
 import { Event } from 'src/events/entities/event.entity/event.entity';
-import { ConfigService, ConfigType } from '@nestjs/config';
+import { ConfigType } from '@nestjs/config';
 import teasConfig from './config/teas.config';
 @Injectable()
 export class TeasService {
@@ -19,9 +19,7 @@ export class TeasService {
     private readonly dataSource: DataSource,
     @Inject(teasConfig.KEY)
     private readonly teasConfiguration: ConfigType<typeof teasConfig>,
-  ) {
-    console.log(teasConfiguration.foo);
-  }
+  ) {}
 
   findAll(paginationQuery: PaginationQueryDto) {
     const { limit, offset } = paginationQuery;
