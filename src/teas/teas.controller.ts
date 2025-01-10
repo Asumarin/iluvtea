@@ -12,13 +12,15 @@ import { TeasService } from './teas.service';
 import { CreateTeaDto } from './dto/create-tea.dto/create-tea.dto';
 import { UpdateTeaDto } from './dto/update-tea.dto/update-tea.dto';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto/pagination-query.dto';
+import { resolve } from 'path';
 
 @Controller('teas')
 export class TeasController {
   constructor(private readonly teasService: TeasService) {}
 
   @Get()
-  findAll(@Query() paginationQuery: PaginationQueryDto) {
+  async findAll(@Query() paginationQuery: PaginationQueryDto) {
+    await new Promise((resolve) => setTimeout(resolve, 5000)); // delete
     return this.teasService.findAll(paginationQuery);
   }
 
