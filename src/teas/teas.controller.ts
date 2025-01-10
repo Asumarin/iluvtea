@@ -13,6 +13,7 @@ import { CreateTeaDto } from './dto/create-tea.dto/create-tea.dto';
 import { UpdateTeaDto } from './dto/update-tea.dto/update-tea.dto';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto/pagination-query.dto';
 import { resolve } from 'path';
+import { ParseIntPipe } from 'src/common/pipes/parse-int/parse-int.pipe';
 
 @Controller('teas')
 export class TeasController {
@@ -20,13 +21,13 @@ export class TeasController {
 
   @Get()
   async findAll(@Query() paginationQuery: PaginationQueryDto) {
-    await new Promise((resolve) => setTimeout(resolve, 5000)); // delete
+    // await new Promise((resolve) => setTimeout(resolve, 5000));
     return this.teasService.findAll(paginationQuery);
   }
 
   @Get(':id')
-  findOne(@Param('id') id) {
-    console.log(typeof id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    console.log(id);
     return this.teasService.findOne(id);
   }
 
