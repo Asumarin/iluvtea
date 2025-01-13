@@ -12,16 +12,19 @@ import { TeasService } from './teas.service';
 import { CreateTeaDto } from './dto/create-tea.dto/create-tea.dto';
 import { UpdateTeaDto } from './dto/update-tea.dto/update-tea.dto';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto/pagination-query.dto';
-import { resolve } from 'path';
 import { ParseIntPipe } from 'src/common/pipes/parse-int/parse-int.pipe';
+import { Public } from 'src/common/decorators/public.decorator';
+import { ApiForbiddenResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('teas')
 @Controller('teas')
 export class TeasController {
   constructor(private readonly teasService: TeasService) {}
 
+  @ApiForbiddenResponse({ description: 'Forbidden.' })
+  @Public()
   @Get()
   async findAll(@Query() paginationQuery: PaginationQueryDto) {
-    // await new Promise((resolve) => setTimeout(resolve, 5000));
     return this.teasService.findAll(paginationQuery);
   }
 
